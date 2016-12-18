@@ -58,7 +58,7 @@ OPTIONS="-u nginx -g nginx -p 9000 -C 32 -F 1 -P /var/run/spawn-fcgi.pid -- /usr
 [root@serverb conf.d]# systemctl enable spawn-fcgi
 ````
 
-**4.配置数据库相关**
+**4.数据库初始化**
 
 ````shell
 [root@serverb conf.d]# systemctl enable mariadb.service
@@ -76,7 +76,15 @@ OPTIONS="-u nginx -g nginx -p 9000 -C 32 -F 1 -P /var/run/spawn-fcgi.pid -- /usr
 [root@serverb tmp]# chown nginx. /usr/share/nginx/bbs.com/ -R
 ````
 
-**6.客户端访问**
+**6.数据库授权**
+
+```shell
+[root@serverb tmp] mysql -uroot -puplooking
+MariaDB [(none)]> grant all on bbs.* to root@'localhost' identified by 'uplooking';
+MariaDB [(none)]> flush privileges;
+```
+
+**7.客户端访问**
 
 ````shell
 [root@workstation ~]# echo “172.25.0.11 www.bbs.com” >> /etc/hosts
@@ -349,6 +357,3 @@ rpcbind-0.2.0-26.el7.x86_64
 ````
 
 （7）客户端测试。再上传图片。（图略）
-
-
-
